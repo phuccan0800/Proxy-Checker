@@ -12,20 +12,20 @@ async function checkProxy(proxy) {
         const [ip, port] = proxyParts;
         proxyConfig = {
             httpsAgent: new HttpsProxyAgent(`http://${ip}:${port}`),
-            timeout: 10000,
+            timeout: 5000,
         };
     } else if (proxyParts.length === 4) {
         const [ip, port, user, pass] = proxyParts;
         proxyConfig = {
             httpsAgent: new HttpsProxyAgent(`http://${user}:${pass}@${ip}:${port}`),
-            timeout: 10000,
+            timeout: 5000,
         };
     } else {
         return null;
     }
 
     try {
-        const response = await axios.get('http://httpbin.org/ip', proxyConfig);
+        const response = await axios.get('https://httpbin.org/ip', proxyConfig);
         if (response.status === 200) {
             return proxy;
         }
